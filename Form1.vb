@@ -45,6 +45,14 @@ Public Class Form1
             Cmd.ExecuteNonQuery()
 
             MsgBox("Input data berhasil")
+
+            Call Koneksi()
+
+            Da = New OdbcDataAdapter("Select * From hasilcek", Conn)
+            Ds = New DataSet
+            Da.Fill(Ds, "hasilcek")
+
+            DataGridView1.DataSource = Ds.Tables("hasilcek")
         End If
     End Sub
 
@@ -54,7 +62,7 @@ Public Class Form1
         Conn = New OdbcConnection(MyDB)
         If Conn.State = ConnectionState.Closed Then
             Conn.Open()
-            MsgBox("Koneksi berhasil")
+            ' MsgBox("Koneksi berhasil")
         End If
     End Sub
 
