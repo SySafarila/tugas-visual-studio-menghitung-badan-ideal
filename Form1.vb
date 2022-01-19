@@ -86,7 +86,21 @@ Public Class Form1
     End Sub
 
     Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
-        Call CekBeratBadan()
 
+        If tbId.Text = "" Or tbNama.Text = "" Or TextTinggiBadan.Text = "" Or TextBeratBadan.Text = "" Then
+            MsgBox("Pastikan semua field terisi")
+        Else
+            Call CekBeratBadan()
+            Call Koneksi()
+
+            Dim EditData As String = "Update hasilcek set nama='" & Nama & "',hasil='" & Hasil & "'where id='" & Id & "'"
+            Cmd = New OdbcCommand(EditData, Conn)
+            Cmd.ExecuteNonQuery()
+
+            MsgBox("Edit data berhasil")
+
+            Call TampilkanData()
+
+        End If
     End Sub
 End Class
