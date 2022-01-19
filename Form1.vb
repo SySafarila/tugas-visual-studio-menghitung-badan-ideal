@@ -6,23 +6,45 @@ Public Class Form1
     Dim Da As OdbcDataAdapter
     Dim Rd As OdbcDataReader
     Dim MyDB As String
+
+    Dim bb As Single
+    Dim tb As Single
+    Dim bi As Single
+
+    Dim Nama As String
+    Dim Id As Integer
+    Dim Hasil As String
     Private Sub BtnCek_Click(sender As Object, e As EventArgs) Handles BtnCek.Click
-        Dim bb As Single
-        Dim tb As Single
-        Dim bi As Single
-
-        tb = TextTinggiBadan.Text
-        bb = TextBeratBadan.Text
-        bi = (tb - 110) * 1.1
-
-        If (bb > (1.1 * bi)) Then
-            MessageBox.Show("Anda gemuuuuk")
+        If tbId.Text = "" Or tbNama.Text = "" Or TextTinggiBadan.Text = "" Or TextBeratBadan.Text = "" Then
+            MsgBox("Pastikan semua field terisi")
         Else
-            If (bb < (0.9 * bi)) Then
-                MessageBox.Show("Anda Kuruuuus")
+            Call Koneksi()
+            Nama = tbNama.Text
+            Id = tbId.Text
+
+
+            tb = TextTinggiBadan.Text
+            bb = TextBeratBadan.Text
+            bi = (tb - 110) * 1.1
+
+            If (bb > (1.1 * bi)) Then
+                MessageBox.Show("Anda gemuuuuk")
+                Hasil = "Gemuk"
             Else
-                MessageBox.Show("Anda ideal, gooood")
+                If (bb < (0.9 * bi)) Then
+                    MessageBox.Show("Anda Kuruuuus")
+                    Hasil = "Kurus"
+                Else
+                    MessageBox.Show("Anda ideal, gooood")
+                    Hasil = "Ideal"
+                End If
             End If
+
+            Dim InputData As String = "Insert into hasilcek values('" & Id & "','" & Nama & "','" & Hasil & "')"
+            Cmd = New OdbcCommand(InputData, Conn)
+            Cmd.ExecuteNonQuery()
+
+            MsgBox("Input data berhasil")
         End If
     End Sub
 
@@ -37,6 +59,6 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Call Koneksi()
+        ' Call Koneksi()
     End Sub
 End Class
