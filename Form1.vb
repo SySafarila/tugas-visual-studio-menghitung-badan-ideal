@@ -12,7 +12,7 @@ Public Class Form1
     Dim bi As Single
 
     Dim Nama As String
-    Dim Id As Integer
+    Dim Id As String
     Dim Hasil As String
     Private Sub BtnCek_Click(sender As Object, e As EventArgs) Handles BtnCek.Click
         If tbId.Text = "" Or tbNama.Text = "" Or TextTinggiBadan.Text = "" Or TextBeratBadan.Text = "" Then
@@ -29,6 +29,8 @@ Public Class Form1
 
             Call TampilkanData()
 
+            Nama = ""
+            Id = ""
         End If
     End Sub
 
@@ -80,5 +82,11 @@ Public Class Form1
                 Hasil = "Ideal"
             End If
         End If
+
+    End Sub
+
+    Private Sub btnEdit_Click(sender As Object, e As EventArgs) Handles btnEdit.Click
+        Call CekBeratBadan()
+
     End Sub
 End Class
