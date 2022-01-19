@@ -19,26 +19,7 @@ Public Class Form1
             MsgBox("Pastikan semua field terisi")
         Else
             Call Koneksi()
-            Nama = tbNama.Text
-            Id = tbId.Text
-
-
-            tb = TextTinggiBadan.Text
-            bb = TextBeratBadan.Text
-            bi = (tb - 110) * 1.1
-
-            If (bb > (1.1 * bi)) Then
-                MessageBox.Show("Anda gemuuuuk")
-                Hasil = "Gemuk"
-            Else
-                If (bb < (0.9 * bi)) Then
-                    MessageBox.Show("Anda Kuruuuus")
-                    Hasil = "Kurus"
-                Else
-                    MessageBox.Show("Anda ideal, gooood")
-                    Hasil = "Ideal"
-                End If
-            End If
+            Call CekBeratBadan()
 
             Dim InputData As String = "Insert into hasilcek values('" & Id & "','" & Nama & "','" & Hasil & "')"
             Cmd = New OdbcCommand(InputData, Conn)
@@ -46,13 +27,8 @@ Public Class Form1
 
             MsgBox("Input data berhasil")
 
-            Call Koneksi()
+            Call TampilkanData()
 
-            Da = New OdbcDataAdapter("Select * From hasilcek", Conn)
-            Ds = New DataSet
-            Da.Fill(Ds, "hasilcek")
-
-            DataGridView1.DataSource = Ds.Tables("hasilcek")
         End If
     End Sub
 
@@ -69,10 +45,40 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Call Koneksi()
 
+        Call TampilkanData()
+
+    End Sub
+
+    Sub TampilkanData()
+        Call Koneksi()
+
         Da = New OdbcDataAdapter("Select * From hasilcek", Conn)
         Ds = New DataSet
         Da.Fill(Ds, "hasilcek")
 
         DataGridView1.DataSource = Ds.Tables("hasilcek")
+    End Sub
+
+    Sub CekBeratBadan()
+        Nama = tbNama.Text
+        Id = tbId.Text
+
+
+        tb = TextTinggiBadan.Text
+        bb = TextBeratBadan.Text
+        bi = (tb - 110) * 1.1
+
+        If (bb > (1.1 * bi)) Then
+            MessageBox.Show("Anda gemuuuuk")
+            Hasil = "Gemuk"
+        Else
+            If (bb < (0.9 * bi)) Then
+                MessageBox.Show("Anda Kuruuuus")
+                Hasil = "Kurus"
+            Else
+                MessageBox.Show("Anda ideal, gooood")
+                Hasil = "Ideal"
+            End If
+        End If
     End Sub
 End Class
