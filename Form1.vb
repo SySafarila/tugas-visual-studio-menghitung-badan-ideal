@@ -59,6 +59,12 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Call Koneksi()
+        Call Koneksi()
+
+        Da = New OdbcDataAdapter("Select * From hasilcek", Conn)
+        Ds = New DataSet
+        Da.Fill(Ds, "hasilcek")
+
+        DataGridView1.DataSource = Ds.Tables("hasilcek")
     End Sub
 End Class
