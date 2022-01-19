@@ -103,4 +103,22 @@ Public Class Form1
 
         End If
     End Sub
+
+    Private Sub btnHapus_Click(sender As Object, e As EventArgs) Handles btnHapus.Click
+        If tbId.Text = "" Then
+            MsgBox("Pastikan field ID terisi")
+        Else
+            ' Call CekBeratBadan()
+            Call Koneksi()
+
+            Dim HapusData As String = "delete from hasilcek where id='" & tbId.Text & "'"
+            Cmd = New OdbcCommand(HapusData, Conn)
+            Cmd.ExecuteNonQuery()
+
+            MsgBox("Data berhasil dihapus")
+
+            Call TampilkanData()
+
+        End If
+    End Sub
 End Class
